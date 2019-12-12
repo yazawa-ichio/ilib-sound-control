@@ -20,7 +20,7 @@ namespace ILib.Audio
 		public float Volume = 1f;
 		[Header("ピッチ")]
 		public float Pitch = 1f;
-		[Header("再生管理用のID")]
+		[Header("再生管理用のID(空の場合アセット名)")]
 		public string ControlId;
 		[Header("再生管理の方式")]
 		public StartControl.Type ControlType;
@@ -34,10 +34,7 @@ namespace ILib.Audio
 			info.Clip = Clip;
 			info.Pitch = Pitch;
 			info.Volume = Mathf.Clamp01(Volume);
-			if (!string.IsNullOrEmpty(info.ControlId))
-			{
-				info.PlayControl = StartControl.Create(ControlType, ControlParam1, ControlParam2);
-			}
+			info.PlayControl = StartControl.Create(ControlType, ControlParam1, ControlParam2);
 			return info;
 		}
 

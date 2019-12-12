@@ -72,7 +72,7 @@ namespace ILib.Audio
 			return m_Provider.GetCacheKey(prm);
 		}
 
-		public IPlayingSoundContext Play(T prm)
+		public IPlayingSoundContext PlayHandle(T prm)
 		{
 			if (m_Disposed) return PlayingSoundContext.Empty;
 			string key = GetCacheKey(prm);
@@ -105,7 +105,7 @@ namespace ILib.Audio
 			}
 		}
 
-		public IPlayingSoundContext Play(SoundInfo info)
+		public IPlayingSoundContext PlayHandle(SoundInfo info)
 		{
 			if (m_Disposed) return PlayingSoundContext.Empty;
 			var ctx = new PlayingSoundContext();
@@ -114,7 +114,7 @@ namespace ILib.Audio
 			return ctx;
 		}
 
-		public void PlayOneShot(T prm)
+		public void Play(T prm)
 		{
 			if (m_Disposed) return;
 			var key = GetCacheKey(prm);
@@ -141,7 +141,7 @@ namespace ILib.Audio
 			}
 		}
 
-		public void PlayOneShot(SoundInfo info)
+		public void Play(SoundInfo info)
 		{
 			if (m_Disposed) return;
 			m_PlayingList.Play(info, m_Provider.MixerGroup, null, IsCreateIfNotEnough);

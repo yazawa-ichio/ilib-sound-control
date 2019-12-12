@@ -1,4 +1,6 @@
-﻿namespace ILib.Audio
+﻿using UnityEngine.Audio;
+
+namespace ILib.Audio
 {
 	public struct MusicPlayConfig
 	{
@@ -19,9 +21,13 @@
 		/// </summary>
 		public bool NoLoop;
 		/// <summary>
-		/// 同一パラメーターの場合、上書せず音声を継続させます
+		/// 同一パラメーターの場合でも強制的に最初から再生を行います
 		/// </summary>
-		public bool IsOverrideEqualParam;
+		public bool IsForceRestartIfEqualParam;
+		/// <summary>
+		/// 基底のミキサーグループを上書きます
+		/// </summary>
+		public AudioMixerGroup Group;
 
 		public static MusicPlayConfig Get(float time)
 		{

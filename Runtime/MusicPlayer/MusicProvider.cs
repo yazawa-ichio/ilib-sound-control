@@ -76,11 +76,10 @@ namespace ILib.Audio
 	/// </summary>
 	public abstract class MusicProviderBase<T> : IMusicProvider<T>
 	{
+		public AudioMixerGroup MixerGroup { get; set; }
+
 		Func<string, string> m_PathConversion;
 		public Func<string, string> PathConversion { set => m_PathConversion = value; }
-
-		Func<string, AudioMixerGroup> m_GroupSelector;
-		public Func<string, AudioMixerGroup> GroupSelector { set => m_GroupSelector = value; }
 
 		Func<T, Action<MusicInfo, Exception>, bool> m_CustomLoad;
 		public Func<T, Action<MusicInfo, Exception>, bool> CustomLoad { set => m_CustomLoad = value; }
@@ -89,14 +88,8 @@ namespace ILib.Audio
 
 		public MusicProviderBase(AudioMixerGroup group, string format)
 		{
-			SetGroup(group);
+			MixerGroup = group;
 			SetPathFormat(format);
-		}
-
-		public MusicProviderBase<T> SetGroup(AudioMixerGroup group)
-		{
-			m_GroupSelector = (x) => group;
-			return this;
 		}
 
 		public MusicProviderBase<T> SetPathFormat(string format)
@@ -135,7 +128,7 @@ namespace ILib.Audio
 				var data = op.asset as MusicData;
 				if (data != null)
 				{
-					onComplete?.Invoke(data.CreateMusic(m_GroupSelector), null);
+					onComplete?.Invoke(data.CreateMusic(), null);
 					return;
 				}
 
@@ -150,10 +143,6 @@ namespace ILib.Audio
 					info.Clip = clip;
 					info.Volume = 1f;
 					info.Pitch = 1f;
-					if (m_GroupSelector != null)
-					{
-						info.Group = m_GroupSelector("");
-					}
 					onComplete?.Invoke(info, null);
 				}
 			};

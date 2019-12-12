@@ -34,7 +34,7 @@ namespace ILib.Audio
 
 		public object Entry { get; private set; }
 
-		public void PlayRequest(MusicRequest req, object entry, float time)
+		public void PlayRequest(MusicRequest req, object entry, float time, UnityEngine.Audio.AudioMixerGroup group)
 		{
 			m_Stop = false;
 			Entry = entry;
@@ -45,7 +45,7 @@ namespace ILib.Audio
 			m_Object.SetActive(true);
 
 			m_Source.clip = Music.Clip;
-			m_Source.outputAudioMixerGroup = Music.Group;
+			m_Source.outputAudioMixerGroup = group;
 			m_Source.pitch = Music.Pitch;
 			m_Source.volume = 0;
 			m_Source.timeSamples = Request.Position;

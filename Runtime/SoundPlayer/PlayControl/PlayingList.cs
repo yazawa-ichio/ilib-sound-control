@@ -85,7 +85,7 @@ namespace ILib.Audio
 			var sound = Borrow(force);
 			if (sound == null)
 			{
-				context.PlayFail(new NotPoolException("プールから音源を確保できませんでした"));
+				context?.PlayFail(new NotPoolException("プールから音源を確保できませんでした"));
 				return;
 			}
 			sound.PlayRequest(info, group, context);
@@ -214,9 +214,9 @@ namespace ILib.Audio
 			}
 		}
 
-		DateTime IPlayingList.GetLastPlayStartTime(string controlId)
+		float IPlayingList.GetLastPlayStartTime(string controlId)
 		{
-			DateTime last = default;
+			float last = default;
 			for (int i = 0; i < m_Playing.Count; i++)
 			{
 				var obj = m_Playing[i];

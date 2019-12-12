@@ -66,7 +66,7 @@ namespace ILib.Audio
 
 		public override Result Update(IPlayingList list, SoundInfo info)
 		{
-			if ((System.DateTime.UtcNow - list.GetLastPlayStartTime(info.ControlId)).TotalSeconds >= m_Interval)
+			if ((Time.time - list.GetLastPlayStartTime(info.ControlId)) >= m_Interval)
 			{
 				return Result.Start;
 			}

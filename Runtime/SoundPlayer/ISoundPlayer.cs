@@ -51,26 +51,28 @@ namespace ILib.Audio
 		/// キャッシュにある場合は即時、そうでない場合はロードしたのち再生されます。
 		/// フェードや音量は返り値を利用してください。
 		/// </summary>
-		IPlayingSoundContext Play(T prm);
+		IPlayingSoundContext PlayHandle(T prm);
 
 		/// <summary>
 		/// サウンド情報を直接渡して再生します。
 		/// フェードや音量は返り値を利用してください。
 		/// </summary>
-		IPlayingSoundContext Play(SoundInfo info);
+		IPlayingSoundContext PlayHandle(SoundInfo info);
 
 		/// <summary>
 		/// サウンドを再生します。
 		/// キャッシュにある場合は即時、そうでない場合はロードしたのち再生されます。
-		/// 何も操作せず、サウンド情報のまま再生する場合に効率的です。
+		/// フェードイン等を行う場合はPlayHandleを利用してください。
+		/// 逆に何も操作せず、サウンド情報のまま再生する場合にPlay関数の方が効率的です。
 		/// </summary>
-		void PlayOneShot(T prm);
+		void Play(T prm);
 
 		/// <summary>
 		/// サウンド情報を直接渡して再生します。
-		/// 何も操作せず、サウンド情報のまま再生する場合に効率的です。
+		/// フェードイン等を行う場合はPlayHandleを利用してください。
+		/// 逆に何も操作せず、サウンド情報のまま再生する場合にPlay関数の方が効率的です。
 		/// </summary>
-		void PlayOneShot(SoundInfo info);
+		void Play(SoundInfo info);
 
 		/// <summary>
 		/// キャッシュにサウンドを追加します。
@@ -92,6 +94,7 @@ namespace ILib.Audio
 		ICacheScope CreateCacheScope(T[] prms);
 
 		/// <summary>
+		/// AddCacheで追加したキャッシュは全て解放します
 		/// forceフラグが無効の際は、CreateCacheScopeで参照カウントがある場合は破棄されません。
 		/// 有効の際は参照カウントがあっても破棄されます。
 		/// </summary>

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace ILib.Audio
 {
@@ -10,6 +11,7 @@ namespace ILib.Audio
 
 	public interface IMusicProvider<T>
 	{
+		AudioMixerGroup MixerGroup { get; }
 		bool Load(T prm, System.Action<MusicInfo, System.Exception> onComplete);
 	}
 

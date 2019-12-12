@@ -9,7 +9,6 @@ namespace ILib.Audio
 	public class MusicInfo 
 	{
 		public AudioClip Clip;
-		public AudioMixerGroup Group;
 		public float Volume = 1f;
 		public float Pitch = 1f;
 

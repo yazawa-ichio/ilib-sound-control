@@ -69,7 +69,7 @@ namespace ILib.Audio
 		public bool Loop { set => m_Source.loop = value; }
 
 		public string ControlId;
-		public DateTime PlayStartTime;
+		public float PlayStartTime;
 		public bool m_IsPlay;
 
 		public void PlayRequest(SoundInfo info, AudioMixerGroup group, PlayingSoundContext context)
@@ -113,7 +113,7 @@ namespace ILib.Audio
 			{
 				Play();
 			}
-			PlayStartTime = DateTime.UtcNow;
+			PlayStartTime = Time.time;
 		}
 
 		public void Resume()

@@ -17,7 +17,7 @@ namespace ILib.Audio
 	/// </summary>
 	public class MusicPlayerImpl<T> : IMusicPlayer<T>
 	{
-		IMusicProvider<T> Provider;
+		IMusicProvider<T> m_Provider;
 		MusicStack m_MusicStack = new MusicStack();
 		PlayingMusic m_PlayingMusic;
 		bool m_Disposed;
@@ -50,7 +50,7 @@ namespace ILib.Audio
 
 		public MusicPlayerImpl(PlayingMusic playingMusic, IMusicProvider<T> provider, MusicPlayerConfig config = null)
 		{
-			Provider = provider;
+			m_Provider = provider;
 			m_PlayingMusic = playingMusic;
 			if (config != null)
 			{
@@ -72,7 +72,7 @@ namespace ILib.Audio
 		public void Change(T prm, MusicPlayConfig config, bool clearStack = false)
 		{
 			if (m_Disposed) return;
-			if (!clearStack && !config.IsOverrideEqualParam && (object)prm == m_MusicStack.Current)
+			if (!clearStack && !config.IsForceRestartIfEqualParam && (object)prm == m_MusicStack.Current)
 			{
 				return;
 			}
@@ -98,7 +98,7 @@ namespace ILib.Audio
 			if (m_Disposed) return;
 			var cur = m_MusicStack.Current;
 			var push = m_MusicStack.Push(prm);
-			if (!config.IsOverrideEqualParam && cur == (object)prm)
+			if (!config.IsForceRestartIfEqualParam && cur == (object)prm)
 			{
 				return;
 			}
@@ -121,7 +121,7 @@ namespace ILib.Audio
 				Stop(config.FadeOutTime);
 				return;
 			}
-			if (!config.IsOverrideEqualParam && cur == pop.Main.Param)
+			if (!config.IsForceRestartIfEqualParam && cur == pop.Main.Param)
 			{
 				return;
 			}
@@ -166,7 +166,7 @@ namespace ILib.Audio
 			if (req.Music != null)
 			{
 				m_PlayingMusic.Stop(config.FadeOutTime);
-				m_PlayingMusic.Play(entry, req, config);
+				m_PlayingMusic.Play(entry, req, m_Provider.MixerGroup, config);
 				return;
 			}
 
@@ -176,7 +176,7 @@ namespace ILib.Audio
 				cache.AddRef();
 				req.Music = cache;
 				m_PlayingMusic.Stop(config.FadeOutTime);
-				m_PlayingMusic.Play(entry, req, config);
+				m_PlayingMusic.Play(entry, req, m_Provider.MixerGroup, config);
 				return;
 			}
 
@@ -185,7 +185,7 @@ namespace ILib.Audio
 				m_PlayingMusic.Stop(config.FadeOutTime);
 			}
 
-			Provider.Load((T)req.Param, (info, ex) =>
+			m_Provider.Load((T)req.Param, (info, ex) =>
 			{
 				if (!config.SkipLoadWait)
 				{
@@ -199,7 +199,7 @@ namespace ILib.Audio
 				{
 					info.AddRef();
 					req.Music = info;
-					m_PlayingMusic.Play(entry, req, config);
+					m_PlayingMusic.Play(entry, req, m_Provider.MixerGroup, config);
 				}
 			});
 		}

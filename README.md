@@ -11,3 +11,7 @@ SEには簡単な発音制御が行えます。
 
 サウンドマネージャーをいい感じに作ってやろうと思ったものの  
 ロード周りとミキサー周りを汎用的に拡張できるようにしつつとか考えて、複雑化してしまったので失敗作。
+
+## [ドキュメント](https://yazawa-ichio.github.io/ilib-unity-project/manual/ilib-sound-control/index.html)
+
+## [APIリファレンス](https://yazawa-ichio.github.io/ilib-unity-project/api/index.html)

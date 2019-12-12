@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace ILib.Audio
 {
@@ -27,12 +28,13 @@ namespace ILib.Audio
 			m_CurrentEntry = entry;
 		}
 
-		internal void Play(object entry, MusicRequest info, MusicPlayConfig config)
+		internal void Play(object entry, MusicRequest info, AudioMixerGroup group, MusicPlayConfig config)
 		{
 			if (entry != m_CurrentEntry) return;
 			var obj = Borrow();
 			m_Playing.Add(obj);
-			obj.PlayRequest(info, entry, config.FadeInTime);
+			//Configのgroupが優先される
+			obj.PlayRequest(info, entry, config.FadeInTime, config.Group ?? group);
 		}
 
 		internal void Stop(float time)
