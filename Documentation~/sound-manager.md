@@ -214,7 +214,7 @@ namespace App.Audio
 		public bool LoadMusic(string path, Action<MusicInfo, Exception> onLoad)
 		{
 			//独自のローダー
-			ResourceLoader.Load(path,(MusicData data, Exception ex) => 
+			return ResourceLoader.Load(path,(MusicData data, Exception ex) => 
 			{
 				onComplete?.Invoke(data?.CreateMusic() ?? null, ex);
 			});
@@ -223,7 +223,7 @@ namespace App.Audio
 		public bool LoadSound(string path, Action<SoundInfo, Exception> onLoad)
 		{
 			//独自のローダー
-			ResourceLoader.Load(path,(SoundData data, Exception ex) => 
+			return ResourceLoader.Load(path,(SoundData data, Exception ex) => 
 			{
 				onComplete?.Invoke(data?.CreateMusic() ?? null, ex);
 			});
@@ -232,7 +232,7 @@ namespace App.Audio
 		public bool LoadVoice(string path, Action<SoundInfo, Exception> onLoad)
 		{
 			//独自のローダー
-			ResourceLoader.Load(path,(AudioClip clip, Exception ex) => 
+			return ResourceLoader.Load(path,(AudioClip clip, Exception ex) => 
 			{
 				if (ex != null)
 				{
