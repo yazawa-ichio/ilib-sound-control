@@ -24,7 +24,7 @@ namespace ILib.Audio
 			}
 		}
 
-		bool CanControl => !IsLoading && m_Stop && IsValid;
+		bool CanControl => !IsLoading && !m_Stop && IsValid;
 
 		public float Volume
 		{
