@@ -10,7 +10,7 @@ namespace ILib.Audio
 		AudioMixerGroup MixerGroup { get; }
 
 		string GetCacheKey(T prm);
-		
+
 		bool Load(T prm, System.Action<SoundInfo, System.Exception> onComplete);
 	}
 

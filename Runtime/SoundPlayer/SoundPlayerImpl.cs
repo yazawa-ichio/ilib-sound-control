@@ -10,7 +10,7 @@ namespace ILib.Audio
 	/// <summary>
 	/// サウンドプレイヤーの実体です
 	/// </summary>
-	public class SoundPlayerImpl : SoundPlayerImpl<string> , ISoundPlayer
+	public class SoundPlayerImpl : SoundPlayerImpl<string>, ISoundPlayer
 	{
 		public SoundPlayerImpl(ISoundProvider<string> provider, SoundPlayerConfig config = null) : base(provider, config) { }
 	}
@@ -18,7 +18,7 @@ namespace ILib.Audio
 	/// <summary>
 	/// サウンドプレイヤーの実体です
 	/// </summary>
-	public class SoundPlayerImpl<T> : ISoundPlayer<T> 
+	public class SoundPlayerImpl<T> : ISoundPlayer<T>
 	{
 		public float LoadTimeout { get; set; } = 2f;
 

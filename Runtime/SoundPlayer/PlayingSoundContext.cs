@@ -172,7 +172,7 @@ namespace ILib.Audio
 			if (m_FadeVolume == null) m_FadeVolume = new ValueTweener(0);
 			m_FadeVolume.Start(0, 1f, time);
 		}
-		
+
 		public void Fade(float end, float time)
 		{
 			if (!IsValid && m_Stop) return;

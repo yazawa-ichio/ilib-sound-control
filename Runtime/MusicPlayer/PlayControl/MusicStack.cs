@@ -7,7 +7,7 @@ namespace ILib.Audio
 
 	internal partial class MusicStack
 	{
-		
+
 		Stack<Entry> m_Entries = new Stack<Entry>();
 
 		public bool IsCacheInfoInStack { get; set; }

@@ -7,7 +7,7 @@ using System.Linq;
 namespace ILib.Audio
 {
 #if !ILIB_AUDIO_DISABLE_TOOL_MENU
-	public static class ToolMenu 
+	public static class ToolMenu
 	{
 		[MenuItem("Tools/SoundControl/Import SoundManager")]
 		static void ImportSoundManager()

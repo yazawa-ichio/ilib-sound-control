@@ -7,7 +7,7 @@ using UnityEngine.Audio;
 namespace ILib.Audio
 {
 	[AddComponentMenu("")]
-	public class PlayingList : MonoBehaviour, IPlayingList , IDisposable
+	public class PlayingList : MonoBehaviour, IPlayingList, IDisposable
 	{
 		struct Request
 		{

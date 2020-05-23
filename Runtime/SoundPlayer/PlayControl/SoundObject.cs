@@ -146,7 +146,7 @@ namespace ILib.Audio
 		{
 			if (!m_Init) Init();
 			m_Context?.Update();
-			
+
 			if (!IsPause && !m_Source.isPlaying)
 			{
 				Finish();

@@ -6,7 +6,7 @@ using UnityEngine.Audio;
 namespace ILib.Audio
 {
 
-	public class MusicInfo 
+	public class MusicInfo
 	{
 		public AudioClip Clip;
 		public float Volume = 1f;

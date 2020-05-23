@@ -12,7 +12,7 @@ namespace ILib.Audio
 		object m_CurrentEntry;
 		Transform m_Root;
 		bool m_Disposed;
-		
+
 		Stack<MusicObject> m_Pool = new Stack<MusicObject>();
 		List<MusicObject> m_Playing = new List<MusicObject>();
 
