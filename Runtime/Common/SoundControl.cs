@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ILib.Audio
 {
@@ -37,6 +35,14 @@ namespace ILib.Audio
 			var obj = new GameObject("SoundControl");
 			GameObject.DontDestroyOnLoad(obj);
 			s_Instance = obj;
+			s_Instance.AddComponent<DestroyObserver>().OnDestroyEvent += () =>
+			{
+				if (s_Instance != null && s_Instance != obj)
+				{
+					return;
+				}
+				Release();
+			};
 		}
 
 		/// <summary>
@@ -45,10 +51,10 @@ namespace ILib.Audio
 		public static void Release()
 		{
 			if (!s_Initialized) return;
+			s_Initialized = false;
 			s_SharedPlayingList = null;
 			GameObject.Destroy(s_Instance, 0.1f);
 			s_Instance = null;
-			s_Initialized = false;
 		}
 
 		public static GameObject CreateRoot(string name)
