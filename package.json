@@ -1,8 +1,8 @@
 {
   "name": "jp.yazawa-ichio.ilib-sound-control",
-  "displayName":  "ILib.SoundControl",
-  "version": "0.1.2",
-  "unity": "2018.3",
+  "displayName": "ILib.SoundControl",
+  "version": "0.1.3",
+  "unity": "2019.4",
   "description": "Unity Sound Control Package.",
   "keywords": [ "auido", "sound" ],
   "Author": "yazawa-ichio (yazawa922473@gmail.com)",

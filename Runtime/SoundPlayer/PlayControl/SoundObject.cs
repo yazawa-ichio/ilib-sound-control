@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Audio;
 
 namespace ILib.Audio
@@ -67,6 +64,7 @@ namespace ILib.Audio
 
 		public bool IsPause { get; set; }
 		public bool Loop { set => m_Source.loop = value; }
+		public float Time { set => m_Source.time = value; }
 
 		public string ControlId;
 		public float PlayStartTime;
@@ -113,7 +111,7 @@ namespace ILib.Audio
 			{
 				Play();
 			}
-			PlayStartTime = Time.time;
+			PlayStartTime = UnityEngine.Time.unscaledTime;
 		}
 
 		public void Resume()

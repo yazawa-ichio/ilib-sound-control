@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Audio;
+﻿using UnityEngine;
 
 namespace ILib.Audio
 {
@@ -124,6 +121,12 @@ namespace ILib.Audio
 			}
 			m_Target.Loop = m_Loop;
 			m_Target.Pitch = m_Pitch;
+			var time = GetStartAt();
+			if (time != 0)
+			{
+				m_Target.Time = time;
+			}
+
 		}
 
 		public void PlayFail(System.Exception error)
@@ -195,5 +198,55 @@ namespace ILib.Audio
 			m_FadeVolume.Start(Volume, 0, time, () => Dispose());
 			m_Stop = true;
 		}
+
+
+		float m_TimeSetAt;
+		float? m_Time;
+		bool m_SetTimeIgnoreLoading;
+
+		public void SetTime(float time)
+		{
+			if (CanControl)
+			{
+				m_Target.Time = time;
+			}
+			else
+			{
+				m_SetTimeIgnoreLoading = false;
+				m_Time = time;
+				m_TimeSetAt = UnityEngine.Time.unscaledTime;
+			}
+		}
+
+		public void SetTimeIgnoreLoadingTime(float time)
+		{
+			if (CanControl)
+			{
+				m_Target.Time = time;
+			}
+			else
+			{
+				m_Time = time;
+				m_SetTimeIgnoreLoading = true;
+			}
+		}
+
+		float GetStartAt()
+		{
+			if (m_Time.HasValue)
+			{
+				if (m_SetTimeIgnoreLoading)
+				{
+					return m_Time.Value;
+				}
+				else
+				{
+					return m_Time.Value + (UnityEngine.Time.unscaledTime - m_TimeSetAt) * m_Pitch;
+				}
+			}
+			return 0;
+		}
+
+
 	}
 }

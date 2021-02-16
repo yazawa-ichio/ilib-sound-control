@@ -65,5 +65,15 @@ namespace ILib.Audio
 		/// 長いSEはFadeOutを推奨します。
 		/// </summary>
 		void Stop();
+		/// <summary>
+		/// 再生時間位置を設定します。
+		/// 遅延ロード中も時間を経過した扱いになります。
+		/// </summary>
+		void SetTime(float time);
+		/// <summary>
+		/// 再生時間位置を設定します。
+		/// 遅延ロード中の経過時間を無視します。
+		/// </summary>
+		void SetTimeIgnoreLoadingTime(float time);
 	}
 }
