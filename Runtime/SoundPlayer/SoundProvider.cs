@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -126,6 +124,19 @@ namespace ILib.Audio
 				return m_CustomLoad(prm, onComplete);
 			}
 			string path = GetPath(prm);
+			if (Application.isPlaying)
+			{
+				ResourcesLoadAsync(path, onComplete);
+			}
+			else
+			{
+				ResourcesLoad(path, onComplete);
+			}
+			return true;
+		}
+
+		protected virtual void ResourcesLoadAsync(string path, Action<SoundInfo, Exception> onComplete)
+		{
 			var op = Resources.LoadAsync(path);
 			op.completed += _ =>
 			{
@@ -149,7 +160,29 @@ namespace ILib.Audio
 					onComplete?.Invoke(info, null);
 				}
 			};
-			return true;
+		}
+
+		protected virtual void ResourcesLoad(string path, Action<SoundInfo, Exception> onComplete)
+		{
+			var asset = Resources.Load(path);
+			var data = asset as SoundData;
+			if (data != null)
+			{
+				onComplete?.Invoke(data.CreateInfo(), null);
+				return;
+			}
+			var clip = asset as AudioClip;
+			if (clip == null)
+			{
+				onComplete?.Invoke(null, new System.IO.FileNotFoundException("Not Found AudioClip.", path));
+			}
+			else
+			{
+				SoundInfo info = new SoundInfo();
+				info.Clip = clip;
+				info.ControlId = path;
+				onComplete?.Invoke(info, null);
+			}
 		}
 	}
 

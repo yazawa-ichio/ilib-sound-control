@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
 namespace ILib.Audio
 {
 	[AddComponentMenu("")]
+	[ExecuteAlways]
 	public class PlayingMusic : MonoBehaviour, System.IDisposable
 	{
 
@@ -70,13 +70,20 @@ namespace ILib.Audio
 			}
 		}
 
-		void Update()
+		public void Update()
 		{
 			if (m_Disposed)
 			{
 				m_Playing.Clear();
 				m_Root = null;
-				GameObject.Destroy(gameObject);
+				if (gameObject.hideFlags == HideFlags.None)
+				{
+					GameObject.Destroy(gameObject);
+				}
+				else
+				{
+					GameObject.DestroyImmediate(gameObject);
+				}
 				return;
 			}
 			bool stop = false;

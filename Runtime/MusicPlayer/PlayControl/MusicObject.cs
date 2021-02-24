@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ILib.Audio
 {
@@ -10,6 +8,7 @@ namespace ILib.Audio
 		{
 			MusicObject ret = new MusicObject();
 			var obj = new GameObject(nameof(MusicObject));
+			obj.hideFlags = parent.hideFlags;
 			obj.transform.SetParent(parent);
 			var source = obj.AddComponent<AudioSource>();
 			source.playOnAwake = false;

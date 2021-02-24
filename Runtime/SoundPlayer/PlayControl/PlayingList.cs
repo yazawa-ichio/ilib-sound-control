@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -7,6 +6,7 @@ using UnityEngine.Audio;
 namespace ILib.Audio
 {
 	[AddComponentMenu("")]
+	[ExecuteAlways]
 	public class PlayingList : MonoBehaviour, IPlayingList, IDisposable
 	{
 		struct Request
@@ -92,7 +92,7 @@ namespace ILib.Audio
 			m_Playing.Add(sound);
 		}
 
-		void Update()
+		public void Update()
 		{
 			if (m_RefCount == 0)
 			{
@@ -236,7 +236,15 @@ namespace ILib.Audio
 			m_Playing.Clear();
 			m_Stack.Clear();
 			m_Request.Clear();
-			GameObject.Destroy(gameObject);
+			if (gameObject.hideFlags == HideFlags.None)
+			{
+				GameObject.Destroy(gameObject);
+			}
+			else
+			{
+				GameObject.DestroyImmediate(gameObject);
+			}
 		}
+
 	}
 }

@@ -9,7 +9,6 @@ namespace ILib.Audio
 	/// </summary>
 	public static class SoundControl
 	{
-		static bool s_Initialized = false;
 		static GameObject s_Instance = null;
 		static PlayingList s_SharedPlayingList;
 		public static PlayingList SharedPlayingList
@@ -28,21 +27,41 @@ namespace ILib.Audio
 		/// プールをのルートオブジェクトを初期化します。
 		/// この処理は手動で実行しなくても自動で実行されます。
 		/// </summary>
-		public static void Initialize()
+		public static void TryInitialize()
 		{
-			if (s_Initialized) return;
-			s_Initialized = true;
-			var obj = new GameObject("SoundControl");
-			GameObject.DontDestroyOnLoad(obj);
-			s_Instance = obj;
-			s_Instance.AddComponent<DestroyObserver>().OnDestroyEvent += () =>
+			if (s_Instance != null)
 			{
-				if (s_Instance != null && s_Instance != obj)
+				if (Application.isPlaying && s_Instance.hideFlags != HideFlags.None)
+				{
+					GameObject.DestroyImmediate(s_Instance);
+					s_Instance = null;
+				}
+				else
 				{
 					return;
 				}
-				Release();
-			};
+			}
+			if (Application.isPlaying)
+			{
+				var obj = new GameObject("SoundControl");
+				s_Instance = obj;
+				GameObject.DontDestroyOnLoad(obj);
+				var observer = s_Instance.AddComponent<DestroyObserver>();
+				observer.OnDestroyEvent += () =>
+				{
+					if (s_Instance != null && s_Instance != obj)
+					{
+						return;
+					}
+					Release();
+				};
+			}
+			else
+			{
+				var obj = new GameObject("Editor::SoundControl");
+				s_Instance = obj;
+				obj.hideFlags = HideFlags.DontSave;
+			}
 		}
 
 		/// <summary>
@@ -50,8 +69,7 @@ namespace ILib.Audio
 		/// </summary>
 		public static void Release()
 		{
-			if (!s_Initialized) return;
-			s_Initialized = false;
+			if (s_Instance == null) return;
 			s_SharedPlayingList = null;
 			GameObject.Destroy(s_Instance, 0.1f);
 			s_Instance = null;
@@ -59,8 +77,9 @@ namespace ILib.Audio
 
 		public static GameObject CreateRoot(string name)
 		{
-			Initialize();
+			TryInitialize();
 			GameObject obj = new GameObject(name);
+			obj.hideFlags = s_Instance.hideFlags;
 			obj.transform.SetParent(s_Instance.transform);
 			return obj;
 		}
@@ -117,6 +136,25 @@ namespace ILib.Audio
 			var list = CreatePlayingMusic(nameof(IMusicPlayer) + ":" + provider);
 			return new MusicPlayerImpl(list, provider, config);
 		}
+
+#if UNITY_EDITOR
+		public static void ForceUpdateInEditor()
+		{
+			if (s_Instance == null)
+			{
+				return;
+			}
+			var handle = UnityEditor.SceneManagement.StageUtility.GetStageHandle(s_Instance);
+			foreach (var list in handle.FindComponentsOfType<PlayingList>())
+			{
+				list.Update();
+			}
+			foreach (var list in handle.FindComponentsOfType<PlayingMusic>())
+			{
+				list.Update();
+			}
+		}
+#endif
 
 	}
 }

@@ -9,6 +9,7 @@ namespace ILib.Audio
 		{
 			SoundObject ret = new SoundObject();
 			var obj = new GameObject(nameof(SoundObject));
+			obj.hideFlags = parent.hideFlags;
 			obj.transform.SetParent(parent);
 			var source = obj.AddComponent<AudioSource>();
 			source.playOnAwake = false;
