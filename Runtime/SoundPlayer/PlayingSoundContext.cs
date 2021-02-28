@@ -17,7 +17,7 @@ namespace ILib.Audio
 			get
 			{
 				if (m_Disposed) return false;
-				return IsLoading || m_Target.IsCurrent(this);
+				return IsLoading || (m_Target?.IsCurrent(this) ?? false);
 			}
 		}
 

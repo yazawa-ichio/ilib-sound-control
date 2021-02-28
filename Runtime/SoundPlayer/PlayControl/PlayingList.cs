@@ -117,6 +117,10 @@ namespace ILib.Audio
 						remove = true;
 						break;
 					case StartControl.Result.Reject:
+						if (m_Request[i].Context != null)
+						{
+							m_Request[i].Context.IsLoading = false;
+						}
 						m_Request[i] = default;
 						remove = true;
 						break;

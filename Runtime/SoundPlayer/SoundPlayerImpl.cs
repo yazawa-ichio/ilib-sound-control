@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
+﻿using System;
 using System.Linq;
+using UnityEngine;
 
 namespace ILib.Audio
 {
@@ -228,7 +226,6 @@ namespace ILib.Audio
 				context?.PlayFail(new TimeoutException("ロードの遅延でタイムアウトが発生しました"));
 				return;
 			}
-			if (context != null) context.IsLoading = false;
 			m_PlayingList.Play(info, m_Provider.MixerGroup, context, IsCreateIfNotEnough);
 		}
 
